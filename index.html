@@ -1,11 +1,295 @@
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title><!-- Your Name --> · Portfolio</title>
+  <meta name="description" content="<!-- One-sentence summary of who you are and what you do -->" />
+  <meta name="theme-color" content="#0ea5e9" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg: #0b0f17;
+      --surface: #111827;
+      --muted: #94a3b8;
+      --text: #e5e7eb;
+      --accent: #38bdf8;
+      --accent-2:#22d3ee;
+      --ring: rgba(56,189,248,.35);
+      --card: #0f172a;
+      --shadow: 0 10px 30px rgba(2,6,23,.35);
+      --radius: 16px;
+    }
+    @media (prefers-color-scheme: light){
+      :root{ --bg:#f8fafc; --surface:#ffffff; --text:#0f172a; --muted:#475569; --card:#ffffff; --ring:rgba(14,165,233,.35); }
+    }
+    *{ box-sizing:border-box; }
+    html{ scroll-behavior:smooth; }
+    body{
+      margin:0; font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background:radial-gradient(1200px 600px at 10% -10%, rgba(56,189,248,.15), transparent 60%),
+                 radial-gradient(1000px 500px at 120% -10%, rgba(34,211,238,.15), transparent 60%), var(--bg);
+      color:var(--text); line-height:1.6;
+    }
+    a{ color:var(--accent); text-decoration:none; }
+    a:hover{ text-decoration:underline; }
+    .container{ width:min(1100px, 92%); margin-inline:auto; }
+
+    /* Header */
+    header{ position:sticky; top:0; backdrop-filter:saturate(140%) blur(8px); background:color-mix(in oklab, var(--bg) 85%, transparent); border-bottom:1px solid color-mix(in oklab, var(--text) 15%, transparent); z-index:50; }
+    .nav{ display:flex; align-items:center; justify-content:space-between; padding:14px 0; }
+    .brand{ display:flex; align-items:center; gap:.75rem; font-weight:700; letter-spacing:.2px; }
+    .dot{ width:12px; height:12px; border-radius:999px; background:linear-gradient(135deg, var(--accent), var(--accent-2)); box-shadow:0 0 0 3px var(--ring); }
+    .nav a{ color:var(--text); opacity:.9; padding:.5rem .75rem; border-radius:10px; }
+    .nav a:hover{ background:color-mix(in oklab, var(--text) 8%, transparent); text-decoration:none; }
+    .menu{ display:flex; gap:.25rem; flex-wrap:wrap; }
+
+    /* Hero */
+    .hero{ display:grid; grid-template-columns:1.15fr .85fr; gap:2rem; align-items:center; padding:72px 0 32px; }
+    .hero h1{ font-size: clamp(2rem, 3.8vw, 3.2rem); line-height:1.1; margin:0 0 12px; letter-spacing:-.02em; }
+    .hero .lead{ color:var(--muted); font-size: clamp(1rem, 1.3vw, 1.1rem); }
+    .actions{ display:flex; gap:.75rem; margin-top:20px; flex-wrap:wrap; }
+    .btn{ display:inline-flex; align-items:center; gap:.5rem; padding:.75rem 1rem; border-radius:14px; border:1px solid color-mix(in oklab, var(--text) 15%, transparent); background:linear-gradient(180deg, color-mix(in oklab, var(--surface) 70%, transparent), color-mix(in oklab, var(--surface) 35%, transparent)); box-shadow:var(--shadow);
+      transition: transform .06s ease; }
+    .btn:hover{ transform: translateY(-1px); text-decoration:none; }
+    .btn.primary{ background:linear-gradient(135deg, var(--accent), var(--accent-2)); color:#02131d; border:0; }
+    .btn.ghost{ background:transparent; }
+
+    .avatar{
+      width:100%; aspect-ratio:1/1; border-radius:20px; background:linear-gradient(135deg, color-mix(in oklab, var(--accent) 25%, var(--card)), var(--card)); border:1px solid color-mix(in oklab, var(--text) 15%, transparent);
+      display:grid; place-items:center; color:var(--muted); font-weight:600; box-shadow:var(--shadow);
+    }
+
+    /* Sections */
+    section{ padding:56px 0; }
+    .section-title{ font-size: clamp(1.4rem, 2.6vw, 2rem); margin:0 0 18px; }
+    .subtle{ color:var(--muted); }
+
+    /* About */
+    .about{ display:grid; grid-template-columns:1fr 1fr; gap:2rem; align-items:start; }
+    .about-card{ background:var(--card); border:1px solid color-mix(in oklab, var(--text) 12%, transparent); border-radius:var(--radius); padding:20px; box-shadow:var(--shadow); }
+
+    /* Projects */
+    .grid{ display:grid; grid-template-columns:repeat(3, 1fr); gap:16px; }
+    .card{ background:var(--card); border:1px solid color-mix(in oklab, var(--text) 12%, transparent); border-radius:var(--radius); padding:18px; display:flex; flex-direction:column; gap:10px; box-shadow:var(--shadow); }
+    .card h3{ margin:0; font-size:1.05rem; }
+    .tags{ display:flex; gap:8px; flex-wrap:wrap; }
+    .tag{ font-size:.78rem; padding:.25rem .5rem; border-radius:999px; border:1px solid color-mix(in oklab, var(--text) 15%, transparent); color:var(--muted); }
+    .card .links{ margin-top:auto; display:flex; gap:.6rem; }
+
+    /* Experience */
+    .xp{ display:grid; grid-template-columns: 1fr; gap:12px; }
+    .xp-item{ display:grid; grid-template-columns: auto 1fr auto; gap:10px; align-items:center; background:var(--card); border:1px solid color-mix(in oklab, var(--text) 12%, transparent); border-radius:var(--radius); padding:12px 14px; }
+    .xp-role{ font-weight:600; }
+    .xp-org{ color:var(--muted); }
+
+    /* Skills */
+    .skills{ display:flex; gap:12px; flex-wrap:wrap; }
+    .chip{ padding:.45rem .7rem; border-radius:999px; background:color-mix(in oklab, var(--text) 7%, transparent); border:1px solid color-mix(in oklab, var(--text) 15%, transparent); }
+
+    /* Contact */
+    .contact-wrap{ display:grid; grid-template-columns:1.1fr .9fr; gap:16px; }
+    form{ display:grid; gap:10px; background:var(--card); border:1px solid color-mix(in oklab, var(--text) 12%, transparent); border-radius:var(--radius); padding:16px; box-shadow:var(--shadow); }
+    label{ font-size:.9rem; color:var(--muted); }
+    input, textarea{ width:100%; padding:.75rem .8rem; border-radius:12px; border:1px solid color-mix(in oklab, var(--text) 18%, transparent); background:color-mix(in oklab, var(--surface) 65%, transparent); color:var(--text); }
+    input:focus, textarea:focus{ outline:2px solid var(--ring); border-color:transparent; }
+    textarea{ min-height:120px; resize:vertical; }
+    .note{ font-size:.88rem; color:var(--muted); }
+
+    /* Footer */
+    footer{ padding:26px 0 40px; color:var(--muted); border-top:1px solid color-mix(in oklab, var(--text) 12%, transparent); }
+    .social{ display:flex; gap:12px; }
+
+    /* Responsive */
+    @media (max-width: 900px){
+      .hero{ grid-template-columns:1fr; }
+      .about{ grid-template-columns:1fr; }
+      .contact-wrap{ grid-template-columns:1fr; }
+      .grid{ grid-template-columns:1fr 1fr; }
+    }
+    @media (max-width: 640px){
+      .menu{ display:none; }
+      .grid{ grid-template-columns:1fr; }
+    }
+  </style>
 </head>
 <body>
-    <h1> jackson</h1>
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <span class="dot" aria-hidden="true"></span>
+        <a href="#top" style="font-size:1.05rem;"> <!-- Your Name --> </a>
+      </div>
+      <nav class="menu" aria-label="Primary">
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#experience">Experience</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top" class="container">
+    <!-- HERO -->
+    <section class="hero" aria-labelledby="intro-title">
+      <div>
+        <h1 id="intro-title">Hi, I'm <!-- Your Name --> — <span style="background:linear-gradient(135deg,var(--accent),var(--accent-2)); -webkit-background-clip:text; background-clip:text; color:transparent;"> <!-- Your Role (e.g., Developer/Designer) --> </span></h1>
+        <p class="lead"> <!-- 1–2 sentences about what you do and the value you bring. Keep it punchy. --> </p>
+        <div class="actions">
+          <a class="btn primary" href="<!-- /path/to/your-resume.pdf -->" download>Download Résumé</a>
+          <a class="btn" href="#projects">View Work</a>
+          <a class="btn ghost" href="#contact">Contact</a>
+        </div>
+      </div>
+      <div class="avatar" aria-label="Your photo placeholder">
+        <!-- Replace with <img src="your-photo.jpg" alt="Portrait of Your Name" style="width:100%;height:100%;object-fit:cover;border-radius:20px;"> -->
+        <span> Your Photo </span>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" aria-labelledby="about-title">
+      <h2 class="section-title" id="about-title">About</h2>
+      <div class="about">
+        <div class="about-card">
+          <p>
+            <!-- Write a short bio. Mention your focus, values, and what types of problems you love solving. -->
+          </p>
+          <p class="subtle">Currently based in <!-- City, Country -->. Open to <!-- e.g., full‑time roles, freelance, collaborations -->.</p>
+        </div>
+        <div class="about-card">
+          <h3 style="margin-top:0;">Highlights</h3>
+          <ul>
+            <li><!-- Key achievement or metric (e.g., "Shipped app used by 50k+ users") --></li>
+            <li><!-- Award/certification --></li>
+            <li><!-- Speaking/teaching/writing highlight --></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" aria-labelledby="projects-title">
+      <h2 class="section-title" id="projects-title">Projects</h2>
+      <p class="subtle">A few things I'm proud of. Swap in your own—add or remove cards as needed.</p>
+      <div class="grid">
+        <!-- Project Card 1 -->
+        <article class="card" aria-labelledby="p1-title">
+          <h3 id="p1-title">Project Name One</h3>
+          <p><!-- 1–2 sentence description focusing on outcome and impact. --></p>
+          <div class="tags">
+            <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span>
+          </div>
+          <div class="links">
+            <a class="btn" href="<!-- Live demo URL -->" target="_blank" rel="noopener">Live</a>
+            <a class="btn ghost" href="<!-- GitHub URL -->" target="_blank" rel="noopener">Code</a>
+          </div>
+        </article>
+        <!-- Project Card 2 -->
+        <article class="card" aria-labelledby="p2-title">
+          <h3 id="p2-title">Project Name Two</h3>
+          <p><!-- What problem did it solve? What changed for the user/business? --></p>
+          <div class="tags">
+            <span class="tag">React</span><span class="tag">API</span><span class="tag">UX</span>
+          </div>
+          <div class="links">
+            <a class="btn" href="#">Live</a>
+            <a class="btn ghost" href="#">Code</a>
+          </div>
+        </article>
+        <!-- Project Card 3 -->
+        <article class="card" aria-labelledby="p3-title">
+          <h3 id="p3-title">Project Name Three</h3>
+          <p><!-- Make the value obvious. Include a metric if possible. --></p>
+          <div class="tags">
+            <span class="tag">Node</span><span class="tag">PostgreSQL</span><span class="tag">Docker</span>
+          </div>
+          <div class="links">
+            <a class="btn" href="#">Live</a>
+            <a class="btn ghost" href="#">Code</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section id="experience" aria-labelledby="xp-title">
+      <h2 class="section-title" id="xp-title">Experience</h2>
+      <div class="xp">
+        <div class="xp-item">
+          <div class="xp-role">Job Title</div>
+          <div class="xp-org">@ Company • City</div>
+          <div class="subtle">2023 — Present</div>
+        </div>
+        <div class="xp-item">
+          <div class="xp-role">Previous Title</div>
+          <div class="xp-org">@ Organization • City</div>
+          <div class="subtle">2021 — 2023</div>
+        </div>
+      </div>
+      <p class="note" style="margin-top:8px;">Tip: focus bullet points on outcomes, not duties. Use action + impact + metric.</p>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" aria-labelledby="skills-title">
+      <h2 class="section-title" id="skills-title">Skills</h2>
+      <div class="skills">
+        <span class="chip">JavaScript</span>
+        <span class="chip">TypeScript</span>
+        <span class="chip">React</span>
+        <span class="chip">Node.js</span>
+        <span class="chip">SQL</span>
+        <span class="chip">UI/UX</span>
+        <!-- Add or remove -->
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" aria-labelledby="contact-title">
+      <h2 class="section-title" id="contact-title">Contact</h2>
+      <div class="contact-wrap">
+        <form action="mailto:you@example.com" method="post" enctype="text/plain" aria-label="Contact form">
+          <div>
+            <label for="name">Name</label>
+            <input id="name" name="name" placeholder="Ada Lovelace" required>
+          </div>
+          <div>
+            <label for="email">Email</label>
+            <input id="email" type="email" name="email" placeholder="you@example.com" required>
+          </div>
+          <div>
+            <label for="message">Message</label>
+            <textarea id="message" name="message" placeholder="Let's build something remarkable."></textarea>
+          </div>
+          <button class="btn primary" type="submit">Send</button>
+          <p class="note">Prefer email? Reach me at <a href="mailto:you@example.com">you@example.com</a>.</p>
+        </form>
+        <div class="about-card">
+          <h3 style="margin-top:0;">Elsewhere</h3>
+          <p class="subtle">Find me on the platforms where I share work and ideas.</p>
+          <div class="social">
+            <a class="btn" href="https://github.com/username" target="_blank" rel="noopener">GitHub</a>
+            <a class="btn" href="https://www.linkedin.com/in/username" target="_blank" rel="noopener">LinkedIn</a>
+            <a class="btn ghost" href="https://x.com/username" target="_blank" rel="noopener">X / Twitter</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container" style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;">
+      <div>© <span id="year"></span> <!-- Your Name -->. All rights reserved.</div>
+      <a href="#top">Back to top ↑</a>
+    </div>
+  </footer>
+
+  <script>
+    // Auto-set current year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
